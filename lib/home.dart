@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'bottom_bar_view.dart';
-import 'fitness_app/models/tabIcon_data.dart';
+import 'module/tabIcon_data.dart';
 import 'myData.dart';
 
 // class Home extends StatelessWidget {
@@ -116,20 +116,15 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   tabBody = Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-
                       Center(
                         child: ElevatedButton(
-                          style:ElevatedButton.styleFrom(
-                            backgroundColor: MyTheme.dartColor
-                          ), 
-                          // ButtonStyle(
-                          //   col: MyTheme.color
-                          // ),
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: MyTheme.color),
                             onPressed: () async {
                               SharedPreferences prefs =
                                   await SharedPreferences.getInstance();
-                                  prefs.clear();
-                                  Navigator.popAndPushNamed(context, "welcome");
+                              prefs.clear();
+                              Navigator.popAndPushNamed(context, "welcome");
                             },
                             child: Text("登出")),
                       )

@@ -51,8 +51,8 @@ class MyappState extends State<MyApp> {
       title: '食農好朋友',
       theme: ThemeData(),
       home: SafeArea(
-        child: userName != "" ?  Home( userName: userName,) : const Welcome(),
-        // child: Container(),
+        //child: userName != "" ?  Home( userName: userName,) : const Welcome(),
+        child: Home( userName: '11136000',),
       ),
       routes: <String, WidgetBuilder>{
         'welcome': (_) => const Welcome(),

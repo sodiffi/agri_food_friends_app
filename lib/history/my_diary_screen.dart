@@ -111,20 +111,18 @@ class _HistoryScreenState extends State<HistoryScreen>
                 logoBtn('images/tap.png', () {}),
               ],
             ),
-           
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-               Padding(padding: EdgeInsets.all(30)
-               ,child:  
-                ElevatedButton(
-                          style:ElevatedButton.styleFrom(
-                            backgroundColor: MyTheme.dartColor
-                          ), 
-            
-                  onPressed: () {},
-                  child: Text('歷程紀錄'),
-                ),)
+                Padding(
+                  padding: EdgeInsets.all(30),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: MyTheme.color),
+                    onPressed: () {},
+                    child: Text('歷程紀錄'),
+                  ),
+                )
               ],
             )
           ]));
