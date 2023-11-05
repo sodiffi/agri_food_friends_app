@@ -176,7 +176,7 @@ class Post extends StatelessWidget {
         // ],
       ),
     );
-    var toolbar = editor.QuillToolbar();
+    // var toolbar =editor.QuillProvider(child:  editor.QuillToolbar(),);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -216,7 +216,7 @@ class Post extends StatelessWidget {
                 style: TextStyle(color: Colors.white),
               ))
         ],
-        backgroundColor: MyTheme.dartColor,
+        backgroundColor: MyTheme.color,
       ),
       body: Container(
         child: Column(children: [
@@ -238,10 +238,32 @@ class Post extends StatelessWidget {
             child: Container(
               color: Colors.white,
               padding: const EdgeInsets.only(left: 16, right: 16),
-              child: quillEditor,
+              child: editor.QuillProvider(
+                configurations: editor.QuillConfigurations(
+                  controller: editor.QuillController(
+                    document: editor.Document(),
+                    selection: const TextSelection.collapsed(offset: 0),
+                  ),
+                  sharedConfigurations: const editor.QuillSharedConfigurations(
+                    locale: Locale('de'),
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    const editor.QuillToolbar(),
+                    Expanded(
+                      child: editor.QuillEditor.basic(
+                        configurations: const editor.QuillEditorConfigurations(
+                          readOnly: false,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
             ),
           ),
-          Container(child: toolbar)
+          // Container(child: toolbar)
         ]),
       ),
     );

@@ -1,4 +1,4 @@
-import 'models/tabIcon_data.dart';
+import '../module/tabIcon_data.dart';
 import 'training/training_screen.dart';
 import 'package:flutter/material.dart';
 import 'bottom_navigation_view/bottom_bar_view.dart';

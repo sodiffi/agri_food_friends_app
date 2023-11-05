@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 import '../fitness_app_theme.dart';
-import '../models/tabIcon_data.dart';
+import '../../module/tabIcon_data.dart';
 import '../../main.dart';
 import 'package:flutter/material.dart';
 

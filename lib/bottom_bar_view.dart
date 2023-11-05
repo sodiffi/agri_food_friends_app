@@ -1,15 +1,10 @@
 import 'dart:math' as math;
-// import '../fitness_app_theme.dart';
-// import '../models/tabIcon_data.dart';
+import 'package:agri_food_freind/module/tabIcon_data.dart';
 import 'package:agri_food_freind/myData.dart';
 
-import '../../main.dart';
 import 'package:flutter/material.dart';
 
 import 'fitness_app/fitness_app_theme.dart';
-import 'fitness_app/models/tabIcon_data.dart';
-
-
 
 class BottomBarView extends StatefulWidget {
   const BottomBarView(
@@ -143,41 +138,58 @@ class _BottomBarViewState extends State<BottomBarView>
                         CurvedAnimation(
                             parent: animationController!,
                             curve: Curves.fastOutSlowIn)),
-                    child: Container(
-                      // alignment: Alignment.center,s
-                      decoration: BoxDecoration(
-                        color: MyTheme.color,
-                        gradient: LinearGradient(
-                            colors: [
-                              MyTheme.color,
-                              MyTheme.dartColor,
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight),
-                        shape: BoxShape.circle,
-                        boxShadow: <BoxShadow>[
-                          BoxShadow(
-                              color: MyTheme.color
-                                  .withOpacity(0.4),
-                              offset: const Offset(8.0, 16.0),
-                              blurRadius: 16.0),
-                        ],
-                      ),
-                      child: Material(
-                        color: Colors.transparent,
-                        child: InkWell(
-                          splashColor: Colors.white.withOpacity(0.1),
-                          highlightColor: Colors.transparent,
-                          focusColor: Colors.transparent,
-                          onTap: widget.addClick,
-                          child: const Icon(
-                            Icons.add,
-                            color: FitnessAppTheme.white,
-                            size: 32,
-                          ),
+                    child: InkWell(
+                      onTap: widget.addClick,
+                      child: Container(
+                        child: Image.asset(
+                          'assets/icons/post2.png',
+                          width: 25,
+                          height: 25,
+                        ),
+                        decoration: BoxDecoration(
+                          boxShadow: <BoxShadow>[
+                            BoxShadow(
+                                color: MyTheme.lightColor.withOpacity(0.4),
+                                offset: const Offset(8.0, 16.0),
+                                blurRadius: 16.0),
+                          ],
                         ),
                       ),
                     ),
+                    // child: Container(
+                    //   // alignment: Alignment.center,s
+                    //   decoration: BoxDecoration(
+                    //     color: MyTheme.lightColor,
+                    //     gradient: LinearGradient(
+                    //         colors: [
+                    //           MyTheme.lightColor,
+                    //           MyTheme.color,
+                    //         ],
+                    //         begin: Alignment.topLeft,
+                    //         end: Alignment.bottomRight),
+                    //     shape: BoxShape.circle,
+                    //     boxShadow: <BoxShadow>[
+                    //       BoxShadow(
+                    //           color: MyTheme.lightColor.withOpacity(0.4),
+                    //           offset: const Offset(8.0, 16.0),
+                    //           blurRadius: 16.0),
+                    //     ],
+                    //   ),
+                    //   child: Material(
+                    //     color: Colors.transparent,
+                    //     child: InkWell(
+                    //       splashColor: Colors.white.withOpacity(0.1),
+                    //       highlightColor: Colors.transparent,
+                    //       focusColor: Colors.transparent,
+                    //       onTap: widget.addClick,
+                    //       child: const Icon(
+                    //         Icons.add,
+                    //         color: FitnessAppTheme.white,
+                    //         size: 32,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                   ),
                 ),
               ),
@@ -255,11 +267,26 @@ class _TabIconsState extends State<TabIcons> with TickerProviderStateMixin {
                   scale: Tween<double>(begin: 0.88, end: 1.0).animate(
                       CurvedAnimation(
                           parent: widget.tabIconData!.animationController!,
-                          curve:
-                              const Interval(0.1, 1.0, curve: Curves.fastOutSlowIn))),
-                  child: Image.asset(widget.tabIconData!.isSelected
-                      ? widget.tabIconData!.selectedImagePath
-                      : widget.tabIconData!.imagePath),
+                          curve: const Interval(0.1, 1.0,
+                              curve: Curves.fastOutSlowIn))),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: Image.asset(
+                          widget.tabIconData!.isSelected
+                              ? widget.tabIconData!.selectedImagePath
+                              : widget.tabIconData!.imagePath,
+                          width: 25,
+                          height: 25,
+                        ),
+                      ),
+                      Text(widget.tabIconData!.title,
+                          style: TextStyle(
+                              color: widget.tabIconData!.isSelected
+                                  ? MyTheme.color
+                                  : MyTheme.gray))
+                    ],
+                  ),
                 ),
                 Positioned(
                   top: 4,
@@ -276,7 +303,7 @@ class _TabIconsState extends State<TabIcons> with TickerProviderStateMixin {
                       width: 8,
                       height: 8,
                       decoration: BoxDecoration(
-                        color: MyTheme.color,
+                        color: MyTheme.lightColor,
                         shape: BoxShape.circle,
                       ),
                     ),
@@ -297,7 +324,7 @@ class _TabIconsState extends State<TabIcons> with TickerProviderStateMixin {
                       width: 4,
                       height: 4,
                       decoration: BoxDecoration(
-                        color: MyTheme.color,
+                        color: MyTheme.lightColor,
                         shape: BoxShape.circle,
                       ),
                     ),
@@ -318,7 +345,7 @@ class _TabIconsState extends State<TabIcons> with TickerProviderStateMixin {
                       width: 6,
                       height: 6,
                       decoration: BoxDecoration(
-                        color: MyTheme.color,
+                        color: MyTheme.lightColor,
                         shape: BoxShape.circle,
                       ),
                     ),

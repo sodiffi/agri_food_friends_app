@@ -20,7 +20,7 @@ class _LoginState extends State<Login> {
     return (TextField(
       controller: t,
       scrollPadding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewInsets.bottom + 25*4),
+          bottom: MediaQuery.of(context).viewInsets.bottom + 25 * 4),
       decoration: InputDecoration(
         fillColor: Colors.white,
         filled: true,
@@ -92,13 +92,11 @@ class _LoginState extends State<Login> {
     SharedPreferences prefs;
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      backgroundColor: MyTheme.color,
+      backgroundColor: MyTheme.lightColor,
       body: Container(
         margin: const EdgeInsets.fromLTRB(20, 5, 20, 0),
         child: Center(
-          
-            child:
-             SingleChildScrollView(
+            child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
@@ -123,7 +121,7 @@ class _LoginState extends State<Login> {
                   prefs = await SharedPreferences.getInstance();
                   prefs.setString(Name.userName, accountC.text);
                   Navigator.pushReplacementNamed(context, "home");
-                }else{
+                } else {
                   print(a);
                 }
               }),

@@ -27,6 +27,7 @@ dependencies:
   file_picker: ^5.2.2
   shared_preferences:
   qr_code_scanner: ^1.0.1
+  csv: ^5.1.1
 
 
 
@@ -62,5 +63,6 @@ flutter:
   assets:
     - images/
     - assets/introduction_animation/
-    - assets/fitness_app/
+    - assets/icons/
+    - assets/data/
 

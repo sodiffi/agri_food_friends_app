@@ -46,7 +46,7 @@ class _WelcomeState
     print(_animationController?.value);
     return Scaffold(
       resizeToAvoidBottomInset:false,
-      backgroundColor: MyTheme.color,
+      backgroundColor: MyTheme.lightColor,
       body: ClipRect(
         child: Stack(
           children: [
