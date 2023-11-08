@@ -22,7 +22,6 @@ class _HistoryScreenState extends State<HistoryScreen>
 
   final ScrollController scrollController = ScrollController();
   double topBarOpacity = 0.0;
-  int _page = 0;
   List? _camera;
 
   Widget logoBtn(String pgFile, Function f) {
@@ -30,9 +29,7 @@ class _HistoryScreenState extends State<HistoryScreen>
       height: MediaQuery.of(context).size.width * 0.3,
       child: ElevatedButton(
         onPressed: () {
-          setState(() {
-            _page = 1;
-          });
+           Navigator.pushNamed(context, "scan");
         },
         style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
         child: Image.asset(pgFile),
@@ -46,7 +43,6 @@ class _HistoryScreenState extends State<HistoryScreen>
 
   @override
   void initState() {
-    print(_page);
     topBarAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
         CurvedAnimation(
             parent: widget.animationController!,
@@ -84,31 +80,22 @@ class _HistoryScreenState extends State<HistoryScreen>
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         // backgroundColor: Colors.transparent,
-        body: getMainUI(),
-        // floatingActionButton: ,
-      ),
-    );
-  }
-
-  Widget getMainUI() {
-    if (_page == 0) {
-      return (Column(
+        body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                logoBtn('images/cas.png', () {}),
-                logoBtn('images/organic.png', () {}),
+                logoBtn('assets/images/cas.png', () {}),
+                logoBtn('assets/images/organic.png', () {}),
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                logoBtn('images/qrcode.png', () {
-                  print(_page);
+                logoBtn('assets/images/qrcode.png', () {
                 }),
-                logoBtn('images/tap.png', () {}),
+                logoBtn('assets/images/tap.png', () {}),
               ],
             ),
             Row(
@@ -125,13 +112,9 @@ class _HistoryScreenState extends State<HistoryScreen>
                 )
               ],
             )
-          ]));
-    } else if (_page == 1) {
-      return (Camera(
-        userName: widget.userName,
-      ));
-    } else {
-      return (Text("this is wrong"));
-    }
+          ]),
+        // floatingActionButton: ,
+      ),
+    );
   }
 }

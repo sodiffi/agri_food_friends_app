@@ -2,6 +2,7 @@ import 'package:agri_food_freind/activity/activity.dart';
 import 'package:agri_food_freind/event/event.dart';
 import 'package:agri_food_freind/history/camera_del.dart';
 import 'package:agri_food_freind/history/my_diary_screen.dart';
+import 'package:agri_food_freind/pages/profile/profile.dart';
 import 'package:agri_food_freind/post.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -113,23 +114,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   return;
                 }
                 setState(() {
-                  tabBody = Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Center(
-                        child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: MyTheme.color),
-                            onPressed: () async {
-                              SharedPreferences prefs =
-                                  await SharedPreferences.getInstance();
-                              prefs.clear();
-                              Navigator.popAndPushNamed(context, "welcome");
-                            },
-                            child: Text("登出")),
-                      )
-                    ],
-                  );
+                  tabBody = Profile();
                 });
               });
             }

@@ -21,47 +21,34 @@ class _LoginState extends State<Login> {
       controller: t,
       scrollPadding: EdgeInsets.only(
           bottom: MediaQuery.of(context).viewInsets.bottom + 25 * 4),
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         fillColor: Colors.white,
         filled: true,
         border: OutlineInputBorder(
-          ///设置边框四个角的弧度
           borderRadius: BorderRadius.all(Radius.circular(10)),
 
-          ///用来配置边框的样式
           borderSide: BorderSide(
-            ///设置边框的颜色
             color: Color.fromRGBO(10, 112, 41, 1),
 
-            ///设置边框的粗细
             width: 2.0,
           ),
         ),
 
-        ///设置输入框可编辑时的边框样式
         enabledBorder: OutlineInputBorder(
-          ///设置边框四个角的弧度
           borderRadius: BorderRadius.all(Radius.circular(10)),
 
-          ///用来配置边框的样式
           borderSide: BorderSide(
-            ///设置边框的颜色
             color: Color.fromRGBO(10, 112, 41, 1),
 
-            ///设置边框的粗细
             width: 2.0,
           ),
         ),
         disabledBorder: OutlineInputBorder(
-          ///设置边框四个角的弧度
           borderRadius: BorderRadius.all(Radius.circular(10)),
 
-          ///用来配置边框的样式
-          borderSide: BorderSide(
-            ///设置边框的颜色
+       borderSide: BorderSide(
             color: Colors.red,
 
-            ///设置边框的粗细
             width: 2.0,
           ),
         ),
@@ -72,7 +59,7 @@ class _LoginState extends State<Login> {
   Widget button_custom(String s, Function f) {
     return (TextButton(
       style: TextButton.styleFrom(
-          backgroundColor: Color.fromRGBO(10, 112, 41, 1),
+          backgroundColor: MyTheme.color,
           foregroundColor: Colors.white),
       onPressed: () {
         f.call();
@@ -101,16 +88,16 @@ class _LoginState extends State<Login> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Image.asset(
-                "images/logo.png",
+                "assets/images/logo.png",
                 width: 300,
                 height: 300,
               ),
               Row(
-                children: [Image.asset("images/tomato.png"), Text("帳號")],
+                children: [Image.asset("assets/icons/tomato.png"), Text("帳號")],
               ),
               accountField,
               Row(
-                children: [Image.asset("images/tomato.png"), Text("密碼")],
+                children: [Image.asset("assets/icons/tomato.png"), Text("密碼")],
               ),
               passwordField,
               button_custom("登入", () async {
