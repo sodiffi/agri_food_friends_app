@@ -3,7 +3,7 @@ import 'package:agri_food_freind/event/event.dart';
 import 'package:agri_food_freind/history/my_diary_screen.dart';
 import 'package:agri_food_freind/pages/profile/profile.dart';
 import 'package:agri_food_freind/post.dart';
-import 'package:agri_food_freind/user/user.dart';
+import 'package:agri_food_freind/activity/city_map.dart';
 import 'package:flutter/material.dart';
 
 import 'bottom_bar_view.dart';

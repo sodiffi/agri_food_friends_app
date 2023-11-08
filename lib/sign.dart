@@ -19,36 +19,37 @@ class _LoginState extends State<Login> {
   TextField te(TextEditingController t) {
     return (TextField(
       controller: t,
+      cursorColor: MyTheme.color,
       scrollPadding: EdgeInsets.only(
           bottom: MediaQuery.of(context).viewInsets.bottom + 25 * 4),
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         fillColor: Colors.white,
         filled: true,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-
+        focusedBorder: OutlineInputBorder(
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
           borderSide: BorderSide(
-            color: Color.fromRGBO(10, 112, 41, 1),
-
+            color: MyTheme.color,
             width: 2.0,
           ),
         ),
-
+        border: OutlineInputBorder(
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+          borderSide: BorderSide(
+            color: MyTheme.color,
+            width: 2.0,
+          ),
+        ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(10)),
-
           borderSide: BorderSide(
             color: Color.fromRGBO(10, 112, 41, 1),
-
             width: 2.0,
           ),
         ),
         disabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(10)),
-
-       borderSide: BorderSide(
+          borderSide: BorderSide(
             color: Colors.red,
-
             width: 2.0,
           ),
         ),
@@ -59,8 +60,7 @@ class _LoginState extends State<Login> {
   Widget button_custom(String s, Function f) {
     return (TextButton(
       style: TextButton.styleFrom(
-          backgroundColor: MyTheme.color,
-          foregroundColor: Colors.white),
+          backgroundColor: MyTheme.color, foregroundColor: Colors.white),
       onPressed: () {
         f.call();
       },
@@ -110,7 +110,8 @@ class _LoginState extends State<Login> {
                   print(a);
                 }
               }),
-              button_custom("Ｇoogle 登入", () =>Navigator.pushReplacementNamed(context, "home")),
+              button_custom("Ｇoogle 登入",
+                  () => Navigator.pushReplacementNamed(context, "home")),
             ],
           ),
         )),

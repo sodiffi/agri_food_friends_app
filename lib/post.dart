@@ -261,28 +261,26 @@ class _PostState extends State<Post> {
         ],
         backgroundColor: MyTheme.color,
       ),
-      body: Column(children: [
-        Row(
-          children: [
-            SizedBox(
-              height: 30,
-              width: MediaQuery.of(context).size.width - 50,
-              child: TextField(
-                controller: titleC,
-                decoration: const InputDecoration.collapsed(hintText: '標題名稱'),
-              ),
-            )
-          ],
-        ),
-        const Text("文章內文"),
-        Expanded(
-          flex: 15,
-          child: Container(
-              color: Colors.white,
-              padding: const EdgeInsets.only(left: 16, right: 16),
-              child: _buildWelcomeEditor(context)),
-        ),
-      ]),
+      body: Container(
+        padding: const EdgeInsets.all(10),
+        child: Column(children: [
+          SizedBox(
+            height: 30,
+            width: MediaQuery.of(context).size.width - 50,
+            child: TextField(
+              controller: titleC,
+              style: const TextStyle(fontSize: 22),
+              cursorColor: MyTheme.color,
+              decoration: const InputDecoration.collapsed(hintText: '標題名稱'),
+            ),
+          ),
+          Expanded(
+            flex: 15,
+            child: Container(
+                color: Colors.white, child: _buildWelcomeEditor(context)),
+          ),
+        ]),
+      ),
     );
   }
 }

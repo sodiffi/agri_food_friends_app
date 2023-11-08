@@ -193,43 +193,26 @@ class __CommentBoxState extends State<_CommentBox> {
 
     final focusNode = context.watch<FocusNode>();
 
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child: Container(
-        color: (Theme.of(context).brightness == Brightness.light)
-            ? AppColors.light
-            : AppColors.dark,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            AnimatedSwitcher(
-              duration: const Duration(milliseconds: 200),
-              transitionBuilder: (child, animation) {
-                final tween =
-                    Tween(begin: const Offset(0.0, 1.0), end: Offset.zero)
-                        .chain(CurveTween(curve: Curves.easeOutQuint));
-                final offsetAnimation = animation.drive(tween);
-                return SlideTransition(
-                  position: offsetAnimation,
-                  child: child,
-                );
-              },
-              child:
-                  (commentFocus.typeOfComment == TypeOfComment.reactionComment)
-                      ? _replyToBox(commentFocus, context)
-                      : const SizedBox.shrink(),
-            ),
-            CommentBox(
-              commenter: context.appState.streamagramUser!,
-              textEditingController: _commentTextController,
-              onSubmitted: handleSubmit,
-              focusNode: focusNode,
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).padding.bottom,
-            )
-          ],
-        ),
+    return Container(
+      color: (Theme.of(context).brightness == Brightness.light)
+          ? AppColors.light
+          : AppColors.dark,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          (commentFocus.typeOfComment == TypeOfComment.reactionComment)
+              ? _replyToBox(commentFocus, context)
+              : const SizedBox.shrink(),
+          // CommentBox(
+          //   commenter: context.appState.streamagramUser!,
+          //   textEditingController: _commentTextController,
+          //   onSubmitted: handleSubmit,
+          //   focusNode: focusNode,
+          // ),
+          // SizedBox(
+          //   height: MediaQuery.of(context).padding.bottom,
+          // )
+        ],
       ),
     );
   }

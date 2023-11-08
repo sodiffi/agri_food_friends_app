@@ -1,13 +1,10 @@
-import 'dart:developer';
-import 'dart:io';
-
+import 'package:agri_food_freind/module/box_ui.dart';
 import 'package:agri_food_freind/module/cusbehiver.dart';
+import 'package:agri_food_freind/activity/city_map.dart';
 import 'package:csv/csv.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 import '../myData.dart';
 
@@ -20,15 +17,30 @@ class Activity extends StatefulWidget {
 }
 
 class _ActivityState extends State<Activity> {
+  CityMap cityMap = CityMap();
+  String filterCity = '';
+  List<dynamic> csvTable = [];
   List data = [];
 
   loadCSVFormAssets() async {
     final myData = await rootBundle.loadString("assets/data/event.csv");
-    List<List<dynamic>> csvTable = const CsvToListConverter().convert(myData);
+    csvTable = const CsvToListConverter().convert(myData);
     setState(() {
       data = csvTable;
     });
+  }
 
+  filterEvent() {
+    data = [];
+    if (filterCity == '') {
+      setState(() {
+        data = csvTable;
+      });
+    } else {
+      csvTable.forEach((event) {
+        if (event[2].toString().contains(filterCity)) data.add(event);
+      });
+    }
     print("data = $data");
   }
 
@@ -75,16 +87,41 @@ class _ActivityState extends State<Activity> {
 
   @override
   Widget build(BuildContext context) {
-    if (data.isNotEmpty) {
-      return Container(
-        color: MyTheme.backgroudColor,
-        child: Column(
-          children: [
-            Container(
-                height: 60,
-                alignment: Alignment.center,
-                child: textWidget(
-                    text: '近期活動', type: TextType.page, color: MyTheme.color)),
+    return Container(
+      color: MyTheme.backgroudColor,
+      child: Column(
+        children: [
+          Container(
+              height: 60,
+              alignment: Alignment.center,
+              child: textWidget(
+                  text: '近期活動', type: TextType.page, color: MyTheme.color)),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: MyTheme.color),
+            child: Text(filterCity == '' ? "全部區域" : filterCity),
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (contexnt) {
+                    return AlertDialog(
+                      content: cityMap,
+                      actions: [
+                        ButtonItem("取消", () {
+                          Navigator.pop(context);
+                        }),
+                        ButtonItem("確定", () {
+                          setState(() {
+                            filterCity = cityMap.selectCity;
+                          });
+                          filterEvent();
+                          Navigator.pop(context);
+                        }),
+                      ],
+                    );
+                  });
+            },
+          ),
+          if (data.isNotEmpty)
             Expanded(
               child: ScrollConfiguration(
                 behavior: CusBehavior(),
@@ -95,41 +132,38 @@ class _ActivityState extends State<Activity> {
                     }),
               ),
             ),
-          ],
-        ),
-      );
-    } else {
-      return Container(color: MyTheme.backgroudColor);
-    }
-
-    // return Card(
-    //   margin: EdgeInsets.all(10),
-    //   elevation: 8,
-    //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)), //<--custom shape
-    //   child: Column(
-    //     children: <Widget>[
-    //       const SizedBox(
-    //         width: 300,
-    //         height: 50,
-    //         child: Text('A card that can be tapped'),
-    //       ),
-    //     ],
-    //   ),
-    // );
-
-    // return Container(
-    //   child: ListView(children: [
-    //     Text(
-    //       "食農相關活動",
-    //       style: TextStyle(fontSize: 30),
-    //     ),
-    //     ElevatedButton(
-    //         style: ElevatedButton.styleFrom(backgroundColor: MyTheme.color),
-    //         onPressed: () {
-    //           show(context);
-    //         },
-    //         child: Text("太康有機食農教育體驗"))
-    //   ]),
-    // );
+        ],
+      ),
+    );
   }
+
+  // return Card(
+  //   margin: EdgeInsets.all(10),
+  //   elevation: 8,
+  //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)), //<--custom shape
+  //   child: Column(
+  //     children: <Widget>[
+  //       const SizedBox(
+  //         width: 300,
+  //         height: 50,
+  //         child: Text('A card that can be tapped'),
+  //       ),
+  //     ],
+  //   ),
+  // );
+
+  // return Container(
+  //   child: ListView(children: [
+  //     Text(
+  //       "食農相關活動",
+  //       style: TextStyle(fontSize: 30),
+  //     ),
+  //     ElevatedButton(
+  //         style: ElevatedButton.styleFrom(backgroundColor: MyTheme.color),
+  //         onPressed: () {
+  //           show(context);
+  //         },
+  //         child: Text("太康有機食農教育體驗"))
+  //   ]),
+  // );
 }

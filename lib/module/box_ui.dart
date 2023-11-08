@@ -1,9 +1,10 @@
+import 'package:agri_food_freind/myData.dart';
 import 'package:flutter/material.dart';
 
 class Box {
   static const BorderRadius normamBorderRadius =
       BorderRadius.all(Radius.circular(30));
-      
+
   static Widget boxHasRadius(
       {Color? color,
       double? height,
@@ -27,4 +28,11 @@ class Box {
       child: child,
     );
   }
+}
+
+Widget ButtonItem(String title, Function() function) {
+  return ElevatedButton(
+      style: ElevatedButton.styleFrom(backgroundColor: MyTheme.color),
+      onPressed: function,
+      child: Text(title));
 }
