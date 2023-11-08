@@ -1,6 +1,8 @@
 import 'package:agri_food_freind/request/event/event_list.dart';
+import 'package:agri_food_freind/time_stamp_embed_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_quill_extensions/flutter_quill_extensions.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:provider/provider.dart';
 import 'package:stream_feed_flutter_core/stream_feed_flutter_core.dart';
@@ -24,14 +26,14 @@ class PostCard extends StatelessWidget {
       {Key? key,
       required this.enrichedActivity,
       required this.onAddComment,
-      // required this.controller,
+      required this.controller,
       required this.msg_list})
       : super(key: key);
 
   /// Enriched activity (post) to display.
   final EnrichedActivity enrichedActivity;
   final OnAddComment onAddComment;
-  // final editor.QuillController controller;
+  final editor.QuillController controller;
   final List<Msg> msg_list;
   // final String article_id;
 
@@ -46,24 +48,34 @@ class PostCard extends StatelessWidget {
         _ProfileSlab(
           userData: userData,
         ),
-        editor.QuillEditor(
-          // scrollable: true,
-          // expands: false,
-          // autoFocus: false,
-          focusNode: FocusNode(),
-          scrollController: ScrollController(),
-// controller: controller,
-          configurations: const editor.QuillEditorConfigurations(
-            scrollable: true,
-            expands: false,
-            autoFocus: false,
-            padding: EdgeInsets.zero,
-            
-            readOnly: true,
-            keyboardAppearance: Brightness.light,
-            showCursor: false,
-          ),
-        ),
+        editor.QuillProvider(
+            configurations: editor.QuillConfigurations(
+              controller: controller,
+            ),
+            child: SizedBox(
+              child: editor.QuillEditor(
+                focusNode: FocusNode(),
+                scrollController: ScrollController(),
+                configurations: editor.QuillEditorConfigurations(
+                  scrollable: true,
+                  expands: false,
+                  autoFocus: false,
+                  padding: EdgeInsets.zero,
+                  readOnly: true,
+                  // keyboardAppearance: Brightness,
+                  showCursor: false,
+                  embedBuilders: [
+                    ...FlutterQuillEmbeds.editorBuilders(
+                      imageEmbedConfigurations:
+                          QuillEditorImageEmbedConfigurations(
+                        forceUseMobileOptionMenuForImageClick: true,
+                      ),
+                    ),
+                    TimeStampEmbedBuilderWidget()
+                  ],
+                ),
+              ),
+            )),
         _InteractiveCommentSlab(
           msg_list: msg_list,
           enrichedActivity: enrichedActivity,
@@ -306,7 +318,7 @@ class _InteractiveCommentSlabState extends State<_InteractiveCommentSlab> {
           TextSpan(
             children: <TextSpan>[
               TextSpan(
-                  text: element.account, style: AppTextStyle.textStyleBold),
+                  text: element.user_id, style: AppTextStyle.textStyleBold),
               const TextSpan(text: '  '),
               TextSpan(text: element.content),
             ],

@@ -5,6 +5,12 @@
 import 'dart:convert';
 // import 'dart:html';
 
+List<Event> parseEvents(String responseBody) {
+  final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
+
+  return parsed.map<Event>((json) => Event.fromJson(json)).toList();
+}
+
 Event eventFromJson(String str) => Event.fromJson(json.decode(str));
 
 String eventToJson(Event data) => json.encode(data.toJson());
@@ -12,25 +18,25 @@ String eventToJson(Event data) => json.encode(data.toJson());
 class Event {
     Event({
         required this.title,
-        required this.account,
-        required this.createTime,
+        required this.user_id,
+        required this.create_time,
         required this.content,
-        required this.msg,
-        required this.article_id
+        this.msg=const[],
+        this.id=0
     });
 
     String title;
-    String account;
-    DateTime createTime;
+    String user_id;
+    String create_time;
     String content;
-    int article_id;
+    int id;
     List<Msg> msg;
 
     factory Event.fromJson(Map<String, dynamic> json) => Event(
-      article_id:json["article_id"],
+      id:json["id"],
         title: json["title"],
-        account: json["account"],
-        createTime: DateTime.parse(json["creat_time"]),
+        user_id: json["user_id"],
+        create_time: json["create_time"],
         content: json["content"],
         msg: json["msg"].length!=0?List<Msg>.from(json["msg"].map((x) => Msg.fromJson(x))):[],
         // msg:[]
@@ -39,8 +45,8 @@ class Event {
     Map<String, dynamic> toJson() => {
       
         "title": title,
-        "account": account,
-        "time": createTime.toIso8601String(),
+        "user_id": user_id,
+        "create_time": create_time,
         "content": content,
         "msg": List<dynamic>.from(msg.map((x) => x.toJson())),
     };
@@ -48,28 +54,28 @@ class Event {
 
 class Msg {
     Msg({
-        required this.account,
+        required this.user_id,
         required this.time,
         required this.content,
-        required this.article_id,
+        // required this.article_id,
     });
 
-    String account;
+    String user_id;
     String time;
     String content;
-    int article_id;
+    // int article_id;
 
     factory Msg.fromJson(Map<String, dynamic> json) => Msg(
-        account: json["user_id"] == null ? null : json["user_id"],
-        time: json["time"] == null ? null : json["time"],
-        content: json["m_c"] == null ? null : json["m_c"],
-        article_id: json['article_id']==null?null:json["article_id"]
+        user_id: json["user_id"] == null ? null : json["user_id"],
+        time: json["time"] == null ? "null" : json["time"],
+        content: json["content"] == null ? null : json["content"],
+        // article_id: json['article_id']==null?null:json["article_id"]
     );
 
     Map<String, dynamic> toJson() => {
-        "user_id": account == null ? null : account,
+        "user_id": user_id == null ? null : user_id,
         "time": time == null ? null : time,
         "content": content == null ? null : content,
-        "article_id":article_id== null ? null : article_id,
+        // "article_id":article_id== null ? null : article_id,
     };
 }

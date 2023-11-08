@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:agri_food_freind/event/app_widgets.dart';
 import 'package:agri_food_freind/event/state/models/user.dart';
 import 'package:agri_food_freind/event/utils.dart';
@@ -64,10 +62,11 @@ class _EventScreenState extends State<EventScreen>
       eventRepo
           .msg(
         Msg(
-            account: "109ab0450",
+            user_id: "109ab0450",
             content: message,
             time: DateTime.now().toString(),
-            article_id: int.parse(a.toString())),
+            // article_id: int.parse(a.toString())
+            ),
       )
           .then((value) {
         print(value);
@@ -130,9 +129,11 @@ class _EventScreenState extends State<EventScreen>
       }
     });
     eventRepo.getEventList().then((value) {
-      print("list length" + value.length.toString());
+      print(value.D);
+      print("length");
+        print(parseEvents(jsonEncode(value.D)).length);
       setState(() {
-        list = value;
+        list = parseEvents(jsonEncode(value.D));
       });
     });
 
@@ -143,24 +144,28 @@ class _EventScreenState extends State<EventScreen>
     List<Widget> res = [];
 
     for (Event element in list) {
+
+
       res.add(PostCard(
         msg_list: element.msg,
         enrichedActivity: GenericEnrichedActivity(
             actor: User(
                 data: StreamagramUser(
               firstName: '王',
-              fullName: element.account,
+              fullName: element.user_id,
               lastName: '小花',
               profilePhoto:
                   'https://images.unsplash.com/photo-1532264523420-881a47db012d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9',
             ).toMap()),
-            time: element.createTime,
-            target: element.article_id.toString()),
+            time: DateTime.now(),
+            target: element.id.toString()),
         onAddComment: openCommentBox,
-        // article_id: element.account,
-        // controller: editor.QuillController(
-        //     document: editor.Document.fromJson(jsonDecode(element.content)),
-        //     selection: TextSelection.collapsed(offset: 0)),
+        controller: 
+        
+        editor.QuillController(
+            document:
+            editor.Document.fromJson(jsonDecode(element.content)),
+            selection: TextSelection.collapsed(offset: 0)),
       ));
     }
 

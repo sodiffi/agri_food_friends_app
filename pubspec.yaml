@@ -14,30 +14,22 @@ dependencies:
   flutter_better_camera:
   # fluttertoast: ^7.1.1
   # simple_permissions: ^0.1.9
+  city_picker_from_map: any
   permission_handler: ^10.2.0
-  flutter_quill: ^7.4.7
+  flutter_quill: ^8.2.5
   stream_feed_flutter_core:
   provider: ^6.0.2
   cached_network_image: ^3.2.0
   transparent_image: ^2.0.0
   jiffy: ^5.0.0
-  # flutter_quill_extensions:
   path_provider: ^2.0.9
   filesystem_picker: ^3.1.0
   file_picker: ^5.2.2
   shared_preferences:
   qr_code_scanner: ^1.0.1
   csv: ^5.1.1
-
-
-
-
-
-
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  flutter_quill_extensions: ^0.6.3
 
 dev_dependencies:
   flutter_test:

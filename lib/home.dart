@@ -1,26 +1,15 @@
 import 'package:agri_food_freind/activity/activity.dart';
 import 'package:agri_food_freind/event/event.dart';
-import 'package:agri_food_freind/history/camera_del.dart';
 import 'package:agri_food_freind/history/my_diary_screen.dart';
 import 'package:agri_food_freind/pages/profile/profile.dart';
 import 'package:agri_food_freind/post.dart';
+import 'package:agri_food_freind/user/user.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'bottom_bar_view.dart';
 import 'module/tabIcon_data.dart';
-import 'myData.dart';
 
-// class Home extends StatelessWidget {
-//   const Home({super.key});
-//   final String userName;
-//   // static const String _title = 'Flutter Code Sample';
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return const HomeState();
-//   }
-// }
 
 class Home extends StatefulWidget {
   const Home({super.key, required this.userName});
@@ -74,7 +63,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         BottomBarView(
           tabIconsList: tabIconsList,
           addClick: () {
-            Navigator.pushNamed(context, "post");
+            Navigator.pushNamed(context, Post.routeName);
           },
           changeIndex: (int index) {
             if (index == 0) {
@@ -114,7 +103,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   return;
                 }
                 setState(() {
-                  tabBody = Profile();
+                  tabBody =const Profile();
                 });
               });
             }

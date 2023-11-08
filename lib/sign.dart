@@ -101,8 +101,6 @@ class _LoginState extends State<Login> {
               ),
               passwordField,
               button_custom("登入", () async {
-                print("login button");
-
                 var a = await accountRepo.login(accountC.text, pswC.text);
                 if (a == "gogo") {
                   prefs = await SharedPreferences.getInstance();
@@ -112,7 +110,7 @@ class _LoginState extends State<Login> {
                   print(a);
                 }
               }),
-              button_custom("Ｇoogle 登入", () => {print("test")}),
+              button_custom("Ｇoogle 登入", () =>Navigator.pushReplacementNamed(context, "home")),
             ],
           ),
         )),
