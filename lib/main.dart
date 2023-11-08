@@ -51,7 +51,7 @@ class MyappState extends State<MyApp> {
       title: '食農好朋友',
       theme: ThemeData(),
       home: Container(
-        color: Colors.white,
+        color: const Color.fromARGB(255, 93, 22, 22),
         child: SafeArea(
           child: userName != ""
               ? Home(
@@ -61,7 +61,7 @@ class MyappState extends State<MyApp> {
         ),
       ),
       routes: <String, WidgetBuilder>{
-        'welcome': (_) => const Welcome(),
+        'welcome': (_) =>  Welcome(),
         'home': (_) => Home(userName: userName),
         'scan': (_) => Camera(userName: userName),
         'login': (_) => Login(),
