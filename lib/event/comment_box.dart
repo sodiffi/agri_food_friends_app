@@ -1,3 +1,4 @@
+import 'package:agri_food_freind/myData.dart';
 import 'package:flutter/material.dart';
 
 import 'app.dart';
@@ -30,14 +31,15 @@ class CommentBox extends StatelessWidget {
             ? AppColors.light
             : AppColors.dark,
         border: Border(
-            top: BorderSide(
-          color: (Theme.of(context).brightness == Brightness.light)
-              ? AppColors.ligthGrey
-              : AppColors.grey,
-        )),
+          top: BorderSide(
+            color: (Theme.of(context).brightness == Brightness.light)
+                ? AppColors.ligthGrey
+                : AppColors.grey,
+          ),
+        ),
       ),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        // mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -57,9 +59,23 @@ class CommentBox extends StatelessWidget {
           ),
           Row(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Avatar.medium(streamagramUser: commenter),
+              Container(
+                width: 50,
+                height: 50,
+                margin: const EdgeInsets.only(top: 10, bottom: 10, right: 10),
+                decoration: ShapeDecoration(
+                  image: const DecorationImage(
+                    image: AssetImage('assets/headshots/headshot1.png'),
+                    fit: BoxFit.cover,
+                  ),
+                  shape: CircleBorder(
+                    side: BorderSide(
+                      width: 2,
+                      color: MyTheme.lightColor,
+                      style: BorderStyle.solid,
+                    ),
+                  ),
+                ),
               ),
               Expanded(
                 child: TextField(
@@ -75,7 +91,7 @@ class CommentBox extends StatelessWidget {
                         textEditingController: textEditingController,
                         onSubmitted: onSubmitted,
                       ),
-                      hintText: 'Add a comment...',
+                      hintText: '留下評論',
                       isDense: true,
                       contentPadding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 12),
@@ -83,9 +99,6 @@ class CommentBox extends StatelessWidget {
                       border: border,
                       enabledBorder: border),
                 ),
-              ),
-              const SizedBox(
-                width: 8,
               ),
             ],
           ),

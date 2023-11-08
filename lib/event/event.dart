@@ -1,9 +1,8 @@
-import 'dart:math';
-
 import 'package:agri_food_freind/event/app_widgets.dart';
 import 'package:agri_food_freind/event/state/models/user.dart';
 import 'package:agri_food_freind/event/utils.dart';
 import 'package:agri_food_freind/event/widgets/widgets.dart';
+import 'package:agri_food_freind/module/cusbehiver.dart';
 import 'package:agri_food_freind/request/event/event.dart';
 import 'package:flutter/material.dart';
 import 'package:stream_feed_flutter_core/stream_feed_flutter_core.dart';
@@ -64,10 +63,11 @@ class _EventScreenState extends State<EventScreen>
       eventRepo
           .msg(
         Msg(
-            account: "109ab0450",
-            content: message,
-            time: DateTime.now().toString(),
-            article_id: int.parse(a.toString())),
+          user_id: "109ab0450",
+          content: message,
+          time: DateTime.now().toString(),
+          // article_id: int.parse(a.toString())
+        ),
       )
           .then((value) {
         print(value);
@@ -130,9 +130,11 @@ class _EventScreenState extends State<EventScreen>
       }
     });
     eventRepo.getEventList().then((value) {
-      print("list length" + value.length.toString());
+      print(value.D);
+      print("length");
+      print(parseEvents(jsonEncode(value.D)).length);
       setState(() {
-        list = value;
+        list = parseEvents(jsonEncode(value.D));
       });
     });
 
@@ -149,18 +151,17 @@ class _EventScreenState extends State<EventScreen>
             actor: User(
                 data: StreamagramUser(
               firstName: '王',
-              fullName: element.account,
+              fullName: element.user_id,
               lastName: '小花',
               profilePhoto:
                   'https://images.unsplash.com/photo-1532264523420-881a47db012d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9',
             ).toMap()),
-            time: element.createTime,
-            target: element.article_id.toString()),
+            time: DateTime.now(),
+            target: element.id.toString()),
         onAddComment: openCommentBox,
-        // article_id: element.account,
-        // controller: editor.QuillController(
-        //     document: editor.Document.fromJson(jsonDecode(element.content)),
-        //     selection: TextSelection.collapsed(offset: 0)),
+        controller: editor.QuillController(
+            document: editor.Document.fromJson(jsonDecode(element.content)),
+            selection: TextSelection.collapsed(offset: 0)),
       ));
     }
 
@@ -180,41 +181,36 @@ class _EventScreenState extends State<EventScreen>
     return Scaffold(
         resizeToAvoidBottomInset: false,
         // backgroundColor: Colors.transparent,
-        body: Container(
-            // width: 200,
-            // height: 300,
-
-            padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 16.0),
-            child: Column(
-              children: list.isEmpty
-                  ? []
-                  : [
-                      Stack(
-                        children: [
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height - 100,
-                            child: ListView(
-                              children: getPost(),
-                              scrollDirection: Axis.vertical,
+        body: ScrollConfiguration(
+          behavior: CusBehavior(),
+          child: Container(
+              padding: const EdgeInsets.only(bottom:10,left: 10,right: 10),
+              child: Column(
+                children: list.isEmpty
+                    ? []
+                    : [
+                        Stack(
+                          children: [
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width,
+                              height: MediaQuery.of(context).size.height - 100,
+                              child: ListView(
+                                children: getPost(),
+                                scrollDirection: Axis.vertical,
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(0,
-                                MediaQuery.of(context).size.height - 300, 0, 0),
-                            // padding:  EdgeInsets.fromLTRB(0, _commentFocusNode.offset.dy, 0, 0),
-                            child: _CommentBox(
+                            _CommentBox(
                               textEditingController: _commentTextController,
                               focusNode: _commentFocusNode,
                               addComment: addComment,
                               showCommentBox: _showCommentBox,
                               commenter: uuser,
-                            ),
-                          )
-                        ],
-                      )
-                    ],
-            )));
+                            )
+                          ],
+                        )
+                      ],
+              )),
+        ));
   }
 
   getMainUI() {
@@ -347,21 +343,15 @@ class __CommentBoxState extends State<_CommentBox>
   @override
   Widget build(BuildContext context) {
     return Visibility(
-      visible: visibility,
-      child: FadeTransition(
-        opacity: _animation,
-        child: Builder(builder: (context) {
-          return Align(
-            alignment: Alignment.bottomCenter,
-            child: CommentBox(
-              commenter: widget.commenter,
-              textEditingController: widget.textEditingController,
-              focusNode: widget.focusNode,
-              onSubmitted: widget.addComment,
-            ),
-          );
-        }),
-      ),
-    );
+        visible: visibility,
+        child: Align(
+          alignment: Alignment.center,
+          child: CommentBox(
+            commenter: widget.commenter,
+            textEditingController: widget.textEditingController,
+            focusNode: widget.focusNode,
+            onSubmitted: widget.addComment,
+          ),
+        ));
   }
 }

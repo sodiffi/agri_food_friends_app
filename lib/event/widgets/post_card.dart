@@ -1,6 +1,9 @@
+import 'package:agri_food_freind/myData.dart';
 import 'package:agri_food_freind/request/event/event_list.dart';
+import 'package:agri_food_freind/time_stamp_embed_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_quill_extensions/flutter_quill_extensions.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:provider/provider.dart';
 import 'package:stream_feed_flutter_core/stream_feed_flutter_core.dart';
@@ -24,14 +27,14 @@ class PostCard extends StatelessWidget {
       {Key? key,
       required this.enrichedActivity,
       required this.onAddComment,
-      // required this.controller,
+      required this.controller,
       required this.msg_list})
       : super(key: key);
 
   /// Enriched activity (post) to display.
   final EnrichedActivity enrichedActivity;
   final OnAddComment onAddComment;
-  // final editor.QuillController controller;
+  final editor.QuillController controller;
   final List<Msg> msg_list;
   // final String article_id;
 
@@ -46,24 +49,37 @@ class PostCard extends StatelessWidget {
         _ProfileSlab(
           userData: userData,
         ),
-        editor.QuillEditor(
-          // scrollable: true,
-          // expands: false,
-          // autoFocus: false,
-          focusNode: FocusNode(),
-          scrollController: ScrollController(),
-// controller: controller,
-          configurations: const editor.QuillEditorConfigurations(
-            scrollable: true,
-            expands: false,
-            autoFocus: false,
-            padding: EdgeInsets.zero,
-            
-            readOnly: true,
-            keyboardAppearance: Brightness.light,
-            showCursor: false,
-          ),
-        ),
+        editor.QuillProvider(
+            configurations: editor.QuillConfigurations(
+              controller: controller,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 4, right: 10, left: 10),
+              child: SizedBox(
+                child: editor.QuillEditor(
+                  focusNode: FocusNode(),
+                  scrollController: ScrollController(),
+                  configurations: editor.QuillEditorConfigurations(
+                    scrollable: true,
+                    expands: false,
+                    autoFocus: false,
+                    padding: EdgeInsets.zero,
+                    readOnly: true,
+                    // keyboardAppearance: Brightness,
+                    showCursor: false,
+                    embedBuilders: [
+                      ...FlutterQuillEmbeds.editorBuilders(
+                        imageEmbedConfigurations:
+                            QuillEditorImageEmbedConfigurations(
+                          forceUseMobileOptionMenuForImageClick: true,
+                        ),
+                      ),
+                      TimeStampEmbedBuilderWidget()
+                    ],
+                  ),
+                ),
+              ),
+            )),
         _InteractiveCommentSlab(
           msg_list: msg_list,
           enrichedActivity: enrichedActivity,
@@ -155,6 +171,7 @@ class __PictureCarousalState extends State<_PictureCarousal> {
   List<Widget> _pictureCarousel(BuildContext context) {
     const iconPadding = EdgeInsets.symmetric(horizontal: 8, vertical: 4);
     var imageUrl = widget.enrichedActivity.extraData!['image_url'] as String;
+
     double aspectRatio =
         widget.enrichedActivity.extraData!['aspect_ratio'] as double? ?? 1.0;
     final iconColor = Theme.of(context).iconTheme.color!;
@@ -301,12 +318,12 @@ class _InteractiveCommentSlabState extends State<_InteractiveCommentSlab> {
     List<Widget> res = [];
     widget.msg_list.forEach((element) {
       res.add(Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
         child: Text.rich(
           TextSpan(
             children: <TextSpan>[
               TextSpan(
-                  text: element.account, style: AppTextStyle.textStyleBold),
+                  text: element.user_id, style: AppTextStyle.textStyleBold),
               const TextSpan(text: '  '),
               TextSpan(text: element.content),
             ],
@@ -321,7 +338,7 @@ class _InteractiveCommentSlabState extends State<_InteractiveCommentSlab> {
   @override
   Widget build(BuildContext context) {
     const textPadding = EdgeInsets.all(8);
-    const spacePadding = EdgeInsets.only(left: 20.0, top: 8);
+    const spacePadding = EdgeInsets.only(top: 4, left: 10, right: 10);
     final comments = _commentReactions;
     final commentCount = _commentCount;
     return Column(
@@ -381,24 +398,20 @@ class _InteractiveCommentSlabState extends State<_InteractiveCommentSlab> {
             ),
           ),
         GestureDetector(
-          behavior: HitTestBehavior.opaque,
           onTap: () {
             widget.onAddComment(enrichedActivity);
           },
           child: Padding(
-            padding: const EdgeInsets.only(left: 16.0, top: 3, right: 8),
+            padding: spacePadding,
             child: Row(
               children: [
                 // const _ProfilePicture(),
                 const Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 8.0),
-                    child: Text(
-                      '留言',
-                      style: TextStyle(
-                        color: AppColors.faded,
-                        fontSize: 14,
-                      ),
+                  child: Text(
+                    '留言',
+                    style: TextStyle(
+                      color: AppColors.faded,
+                      fontSize: 14,
                     ),
                   ),
                 ),
@@ -425,7 +438,7 @@ class _InteractiveCommentSlabState extends State<_InteractiveCommentSlab> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 16.0, top: 4),
+          padding: spacePadding,
           child: Text(
             _timeSinceMessage,
             style: const TextStyle(
@@ -460,6 +473,7 @@ class _ProfilePicture extends StatelessWidget {
   }
 }
 
+//po文人頭像、姓名
 class _ProfileSlab extends StatelessWidget {
   const _ProfileSlab({
     Key? key,
@@ -470,26 +484,45 @@ class _ProfileSlab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 16.0),
-      child: Row(
-        children: [
-          Avatar.medium(streamagramUser: userData),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              userData.fullName,
-              style: AppTextStyle.textStyleBold,
+    return Row(
+      children: [
+        Container(
+          width: 50,
+          height: 50,
+          margin:
+              const EdgeInsets.only(top: 20, right: 10, left: 10, bottom: 20),
+          decoration: ShapeDecoration(
+            image: const DecorationImage(
+              image: AssetImage('assets/headshots/headshot1.png'),
+              fit: BoxFit.cover,
+            ),
+            shape: CircleBorder(
+              side: BorderSide(
+                width: 2,
+                color: MyTheme.lightColor,
+                style: BorderStyle.solid,
+              ),
             ),
           ),
-          const Spacer(),
-          TapFadeIcon(
+        ),
+        // Avatar.medium(streamagramUser: userData),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            userData.fullName,
+            style: AppTextStyle.textStyleBold,
+          ),
+        ),
+        const Spacer(),
+        Padding(
+          padding: const EdgeInsets.only(right: 10),
+          child: TapFadeIcon(
             onTap: () => context.removeAndShowSnackbar('Not part of the demo'),
             icon: Icons.more_horiz,
             iconColor: Theme.of(context).iconTheme.color!,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

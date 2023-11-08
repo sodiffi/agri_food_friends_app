@@ -1,5 +1,6 @@
 import 'package:agri_food_freind/history/camera.dart';
 import 'package:agri_food_freind/myData.dart';
+import 'package:agri_food_freind/post.dart';
 import 'package:agri_food_freind/sign.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,7 +25,7 @@ class MyApp extends StatefulWidget {
 }
 
 class MyappState extends State<MyApp> {
-  String userName = "";
+  String userName = "11136000";
 
   _loadUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -45,23 +46,28 @@ class MyappState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      color: Colors.white,
       debugShowCheckedModeBanner: false,
       title: '食農好朋友',
       theme: ThemeData(),
-      home: SafeArea(
-        child: userName != ""
-            ? Home(
-                userName: userName,
-              )
-            : const Welcome(),
-        // child: Home( userName: '11136000',),
+      home: Container(
+        color: const Color.fromARGB(255, 93, 22, 22),
+        child: SafeArea(
+          child: userName != ""
+              ? Home(
+                  userName: userName,
+                )
+              : const Welcome(),
+        ),
       ),
       routes: <String, WidgetBuilder>{
-        'welcome': (_) => const Welcome(),
+        'welcome': (_) =>  Welcome(),
         'home': (_) => Home(userName: userName),
-        'post': (_) => Post(userName: userName),
         'scan': (_) => Camera(userName: userName),
         'login': (_) => Login(),
+        Post.routeName: (_) => Post(
+              userName: userName,
+            ),
       },
     );
   }

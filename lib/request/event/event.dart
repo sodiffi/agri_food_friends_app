@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:agri_food_freind/request/data.dart';
+
 import '../api.dart';
 import 'event_list.dart';
 import 'package:http/http.dart' as http;
@@ -9,7 +11,7 @@ abstract class EventAPI {
   Future<String> post(Event e);
 
   /// 查詢文章列表
-  Future<List<Event>> getEventList();
+  Future<Format> getEventList();
 
   //留言
   Future<String> msg(Msg m);
@@ -20,35 +22,13 @@ abstract class EventAPI {
 
 class EventRepo extends API implements EventAPI {
   @override
-  Future<List<Event>> getEventList() async {
-    print("i'm post funcion");
-    List<Event> res = [];
-    try {
-      final response = await client.get(
+  Future<Format> getEventList() async {
+    return await lunch(
+      client.get(
         Uri.parse('$domain/post/'),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      );
-      if (response.statusCode == 200) {
-        print("evnet list 200");
-        json.decode(response.body).forEach((e) {
-          print(e['msg'].length);
-          res.add(Event.fromJson(e));
-        });
-        //    List<Event> list = json.decode(response.body)
-        // .map((data) => Event.fromJson(data))
-        // .toList();
-        // print(list.isEmpty);
-        // res=list;
-      }
-    } catch (e) {
-      print(e.toString());
-    }
-
-    return res;
-    // TODO: implement getEventList
-    // throw "error";
+        headers: header,
+      ),
+    );
   }
 
   @override
