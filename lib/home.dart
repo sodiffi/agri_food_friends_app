@@ -43,20 +43,15 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: SafeArea(
-        child: Scaffold(
-            resizeToAvoidBottomInset: false,
-            // backgroundColor: Colors.transparent,
-            body: Stack(
-              children: <Widget>[
-                tabBody,
-                bottomBar(),
-              ],
-            )),
-      ),
-    );
+    return Scaffold(
+        resizeToAvoidBottomInset: false,
+        // backgroundColor: Colors.transparent,
+        body: Stack(
+          children: <Widget>[
+            tabBody,
+            bottomBar(),
+          ],
+        ));
   }
 
   Widget bottomBar() {

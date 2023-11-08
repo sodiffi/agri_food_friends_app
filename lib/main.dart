@@ -45,30 +45,34 @@ class MyappState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return Container(
       color: Colors.white,
-      debugShowCheckedModeBanner: false,
-      title: '食農好朋友',
-      theme: ThemeData(),
-      home: Container(
-        color: const Color.fromARGB(255, 93, 22, 22),
-        child: SafeArea(
-          child: userName != ""
-              ? Home(
+      child: SafeArea(
+        child: MaterialApp(
+          color: Colors.white,
+          debugShowCheckedModeBanner: false,
+          title: '食農好朋友',
+          theme: ThemeData(),
+          home: Container(
+            color: const Color.fromARGB(255, 93, 22, 22),
+            child: Welcome(),
+            // child: userName != ""
+            //     ? Home(
+            //         userName: userName,
+            //       )
+            //     : const Welcome(),
+          ),
+          routes: <String, WidgetBuilder>{
+            'welcome': (_) => Welcome(),
+            'home': (_) => Home(userName: userName),
+            'scan': (_) => Camera(userName: userName),
+            'login': (_) => Login(),
+            Post.routeName: (_) => Post(
                   userName: userName,
-                )
-              : const Welcome(),
+                ),
+          },
         ),
       ),
-      routes: <String, WidgetBuilder>{
-        'welcome': (_) =>  Welcome(),
-        'home': (_) => Home(userName: userName),
-        'scan': (_) => Camera(userName: userName),
-        'login': (_) => Login(),
-        Post.routeName: (_) => Post(
-              userName: userName,
-            ),
-      },
     );
   }
 }

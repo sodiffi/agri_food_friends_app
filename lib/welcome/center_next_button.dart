@@ -1,3 +1,4 @@
+import 'package:agri_food_freind/myData.dart';
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 
@@ -95,9 +96,9 @@ class CenterNextButton extends StatelessWidget {
                     },
                     child: _signUpMoveAnimation.value > 0.7
                         ? InkWell(
-                            key: ValueKey('Sign Up button'),
+                            key: const ValueKey('Sign Up button'),
                             onTap: onNextClick,
-                            child: Padding(
+                            child: const Padding(
                               padding: EdgeInsets.only(left: 16.0, right: 16.0),
                               child: Row(
                                 mainAxisAlignment:
@@ -118,9 +119,9 @@ class CenterNextButton extends StatelessWidget {
                             ),
                           )
                         : InkWell(
-                            key: ValueKey('next button'),
+                            key: const ValueKey('next button'),
                             onTap: onNextClick,
-                            child: Padding(
+                            child: const Padding(
                               padding: EdgeInsets.all(16.0),
                               child: Icon(Icons.arrow_forward_ios_rounded,
                                   color: Colors.white),
@@ -141,7 +142,7 @@ class CenterNextButton extends StatelessWidget {
                   Text(
                     '已經有帳號了嗎? ',
                     style: TextStyle(
-                      color: Colors.grey,
+                      color: MyTheme.color,
                       fontSize: 14,
                       fontWeight: FontWeight.normal,
                     ),
@@ -197,7 +198,7 @@ class CenterNextButton extends StatelessWidget {
                   borderRadius: BorderRadius.circular(32),
                   color: _selectedIndex == i
                       ? Color(0xff132137)
-                      : Color(0xffE3E4E4),
+                      : Colors.white,
                 ),
                 width: 10,
                 height: 10,
