@@ -4,8 +4,6 @@ import 'package:agri_food_freind/myData.dart';
 
 import 'package:flutter/material.dart';
 
-import 'fitness_app/fitness_app_theme.dart';
-
 class BottomBarView extends StatefulWidget {
   const BottomBarView(
       {Key? key, this.tabIconsList, this.changeIndex, this.addClick})
@@ -43,7 +41,7 @@ class _BottomBarViewState extends State<BottomBarView>
             return Transform(
               transform: Matrix4.translationValues(0.0, 0.0, 0.0),
               child: PhysicalShape(
-                color: FitnessAppTheme.white,
+                color: Colors.white,
                 elevation: 16.0,
                 clipper: TabClipper(
                     radius: Tween<double>(begin: 0.0, end: 1.0)
@@ -156,40 +154,6 @@ class _BottomBarViewState extends State<BottomBarView>
                         ),
                       ),
                     ),
-                    // child: Container(
-                    //   // alignment: Alignment.center,s
-                    //   decoration: BoxDecoration(
-                    //     color: MyTheme.lightColor,
-                    //     gradient: LinearGradient(
-                    //         colors: [
-                    //           MyTheme.lightColor,
-                    //           MyTheme.color,
-                    //         ],
-                    //         begin: Alignment.topLeft,
-                    //         end: Alignment.bottomRight),
-                    //     shape: BoxShape.circle,
-                    //     boxShadow: <BoxShadow>[
-                    //       BoxShadow(
-                    //           color: MyTheme.lightColor.withOpacity(0.4),
-                    //           offset: const Offset(8.0, 16.0),
-                    //           blurRadius: 16.0),
-                    //     ],
-                    //   ),
-                    //   child: Material(
-                    //     color: Colors.transparent,
-                    //     child: InkWell(
-                    //       splashColor: Colors.white.withOpacity(0.1),
-                    //       highlightColor: Colors.transparent,
-                    //       focusColor: Colors.transparent,
-                    //       onTap: widget.addClick,
-                    //       child: const Icon(
-                    //         Icons.add,
-                    //         color: FitnessAppTheme.white,
-                    //         size: 32,
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
                   ),
                 ),
               ),
